@@ -24,70 +24,78 @@
 #define FOUNDATION_EXCEPTION_HH
 
 #include <exception>
-#include <string>
+#include <format>
 #include <ostream>
 #include <source_location>
 #include <stacktrace>
-#include <format>
+#include <string>
 
 namespace infinity {
 namespace foundation {
 struct Exception : public std::exception {
-  std::string message;
-  std::source_location location;
-  std::stacktrace trace;
+    std::string          message;
+    std::source_location location;
+    std::stacktrace      trace;
 
-  static Exception
-  current(std::string message,
-          std::source_location location = std::source_location::current(),
-          std::stacktrace trace = std::stacktrace::current()) {
-    return {std::move(message), std::move(location), std::move(trace)};
-  }
+    static Exception
+    current(std::string          message,
+            std::source_location location = std::source_location::current(),
+            std::stacktrace      trace    = std::stacktrace::current()) {
+        return {std::move(message), std::move(location), std::move(trace)};
+    }
 
-  const char *what() const noexcept override { return message.c_str(); }
+    const char *what() const noexcept override { return message.c_str(); }
 };
 
-std::ostream &operator<<(std::ostream &out, const std::source_location &location) {
-  out << location.file_name() << ":" << location.line() << "." << location.column()
-      << " in " << location.function_name();
-  return out;
+std::ostream &operator<<(std::ostream               &out,
+                         const std::source_location &location) {
+    out << location.file_name() << ":" << location.line() << "."
+        << location.column() << " in " << location.function_name();
+    return out;
 }
 
 std::ostream &operator<<(std::ostream &out, const Exception &error) {
-  out << "Error: " << error.message << "\n"
-      << "  at " << error.location << "\n"
-      << "during\n"
-      << error.trace;
-  return out;
+    out << "Error: " << error.message << "\n"
+        << "  at " << error.location << "\n"
+        << "during\n"
+        << error.trace;
+    return out;
 }
 } // namespace foundation
 } // namespace infinity
 
 template <> struct std::formatter<std::source_location> {
-  template <class ParseContext> constexpr auto parse(ParseContext &ctx) -> ParseContext::iterator {
-    return ctx.begin();
-  }
-  template <class FormatContext>
-  auto format(const std::source_location &location,
-              FormatContext &context) -> FormatContext::iterator {
-    return std::format_to(context.out(), "{}:{}.{} in {}",
-                          location.file_name(), location.line(),
-                          location.column(), location.function_name());
-  }
+    template <class ParseContext>
+    constexpr auto parse(ParseContext &ctx) -> ParseContext::iterator {
+        return ctx.begin();
+    }
+    template <class FormatContext>
+    auto format(const std::source_location &location, FormatContext &context)
+        -> FormatContext::iterator {
+        return std::format_to(context.out(),
+                              "{}:{}.{} in {}",
+                              location.file_name(),
+                              location.line(),
+                              location.column(),
+                              location.function_name());
+    }
 };
 
 template <> struct std::formatter<infinity::foundation::Exception> {
-  template <class ParseContext> constexpr auto parse(ParseContext &ctx) -> ParseContext::iterator {
-    return ctx.begin();
-  }
+    template <class ParseContext>
+    constexpr auto parse(ParseContext &ctx) -> ParseContext::iterator {
+        return ctx.begin();
+    }
 
-  template <class FormatContext>
-  auto format(const infinity::foundation::Exception &error,
-              FormatContext &context) -> FormatContext::iterator {
-    return std::format_to(
-        context.out(), "Error: {}\n  at {}\ during:\n{}",
-        error.message, error.location, error.trace);
-  }
+    template <class FormatContext>
+    auto format(const infinity::foundation::Exception &error,
+                FormatContext &context) -> FormatContext::iterator {
+        return std::format_to(context.out(),
+                              "Error: {}\n  at {}\ during:\n{}",
+                              error.message,
+                              error.location,
+                              error.trace);
+    }
 };
 
 #endif // !FOUNDATION_EXCEPTION_HH
