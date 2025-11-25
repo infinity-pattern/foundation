@@ -1,3 +1,16 @@
+# Editor files
+.vs/
+.vscode/
+
+# Build system
+[bB]uild
+out/
+.cache/
+
+# Generated files
+**/foundation/host.hh
+**/foundation/version.cc
+
 # Prerequisites
 *.d
 
