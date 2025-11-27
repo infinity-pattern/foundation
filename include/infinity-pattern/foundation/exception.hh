@@ -20,8 +20,8 @@
  *                                                                          *
  ***************************************************************************/
 
-#ifndef FOUNDATION_EXCEPTION_HH
-#define FOUNDATION_EXCEPTION_HH
+#ifndef INFINITY_PATTERN_FOUNDATION_EXCEPTION_HH
+#define INFINITY_PATTERN_FOUNDATION_EXCEPTION_HH
 
 #include <exception>
 #include <format>
@@ -30,31 +30,33 @@
 #include <stacktrace>
 #include <string>
 
-namespace infinity {
+namespace infinity_pattern {
 namespace foundation {
 struct Exception : public std::exception {
     std::string          message;
     std::source_location location;
     std::stacktrace      trace;
 
-    static Exception
+    static auto
     current(std::string          message,
             std::source_location location = std::source_location::current(),
-            std::stacktrace      trace    = std::stacktrace::current()) {
+            std::stacktrace trace = std::stacktrace::current()) -> Exception {
         return {std::move(message), std::move(location), std::move(trace)};
     }
 
-    const char *what() const noexcept override { return message.c_str(); }
+    auto what() const noexcept override -> const char * {
+        return message.c_str();
+    }
 };
 
-std::ostream &operator<<(std::ostream               &out,
-                         const std::source_location &location) {
+auto operator<<(std::ostream &out, const std::source_location &location)
+    -> std::ostream & {
     out << location.file_name() << ":" << location.line() << "."
         << location.column() << " in " << location.function_name();
     return out;
 }
 
-std::ostream &operator<<(std::ostream &out, const Exception &error) {
+auto operator<<(std::ostream &out, const Exception &error) -> std::ostream & {
     out << "Error: " << error.message << "\n"
         << "  at " << error.location << "\n"
         << "during\n"
@@ -81,7 +83,7 @@ template <> struct std::formatter<std::source_location> {
     }
 };
 
-template <> struct std::formatter<infinity::foundation::Exception> {
+template <> struct std::formatter<infinity_pattern::foundation::Exception> {
     template <class ParseContext>
     constexpr auto parse(ParseContext &ctx) -> ParseContext::iterator {
         return ctx.begin();
@@ -98,4 +100,4 @@ template <> struct std::formatter<infinity::foundation::Exception> {
     }
 };
 
-#endif // !FOUNDATION_EXCEPTION_HH
+#endif // !INFINITY_PATTERN_FOUNDATION_EXCEPTION_HH

@@ -20,14 +20,14 @@
  *                                                                          *
  ***************************************************************************/
 
-#ifndef FOUNDATION_VERSION_HH
-#define FOUNDATION_VERSION_HH
+#ifndef INFINITY_PATTERN_FOUNDATION_VERSION_HH
+#define INFINITY_PATTERN_FOUNDATION_VERSION_HH
 
 #include <format>
 #include <ostream>
 #include <string_view>
 
-namespace infinity {
+namespace infinity_pattern {
 namespace foundation {
 struct Version {
     unsigned major : 16;
@@ -62,14 +62,14 @@ extern const Build build;
 } // namespace foundation
 } // namespace infinity
 
-template <> struct std::formatter<infinity::foundation::Version> {
+template <> struct std::formatter<infinity_pattern::foundation::Version> {
     template <class ParseContext>
     constexpr auto parse(ParseContext &context) -> ParseContext::iterator {
         return context.begin();
     }
 
     template <class FormatContext>
-    constexpr auto format(infinity::foundation::Version const &version,
+    constexpr auto format(infinity_pattern::foundation::Version const &version,
                           FormatContext                       &context) const
         -> FormatContext::iterator {
         return std::format_to(context.out(),
@@ -81,14 +81,14 @@ template <> struct std::formatter<infinity::foundation::Version> {
     }
 };
 
-template <> struct std::formatter<infinity::foundation::Build> {
+template <> struct std::formatter<infinity_pattern::foundation::Build> {
     template <class ParseContext>
     constexpr auto parse(ParseContext &context) -> ParseContext::iterator {
         return context.begin();
     }
 
     template <class FormatContext>
-    constexpr auto format(infinity::foundation::Build const &build,
+    constexpr auto format(infinity_pattern::foundation::Build const &build,
                           FormatContext                     &context) const
         -> FormatContext::iterator {
         return std::format_to(context.out(),
@@ -99,4 +99,4 @@ template <> struct std::formatter<infinity::foundation::Build> {
     }
 };
 
-#endif // !FOUNDATION_VERSION_HH
+#endif // !INFINITY_PATTERN_FOUNDATION_VERSION_HH

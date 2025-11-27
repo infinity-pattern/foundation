@@ -20,13 +20,24 @@
  *                                                                          *
  ***************************************************************************/
 
-#include "foundation/version.hh"
+#ifndef INFINITY_PATTERN_FOUNDATION_HOST_HH
+#define INFINITY_PATTERN_FOUNDATION_HOST_HH
 
-namespace infinity {
-namespace foundation {
-const Build build = {.version = {${FOUNDATION_VERSION_MAJOR}, ${FOUNDATION_VERSION_MINOR}, ${FOUNDATION_VERSION_PATCH}, ${FOUNDATION_VERSION_TWEAK}},
-					 .revision = {"${FOUNDATION_BUILD_REVISION}"},
-					 .timestamp = {"${FOUNDATION_BUILD_TIMESTAMP}"}};
-} // namespace foundation
-} // namespace infinity
+#cmakedefine FOUNDATION_HOST_CXX_COMPILER_KNOWN
+#cmakedefine FOUNDATION_HOST_CXX_COMPILER_GNU
+#cmakedefine FOUNDATION_HOST_CXX_COMPILER_CLANG
+#cmakedefine FOUNDATION_HOST_CXX_COMPILER_MSVC
+
+#cmakedefine FOUNDATION_HOST_C_COMPILER_KNOWN
+#cmakedefine FOUNDATION_HOST_C_COMPILER_GNU
+#cmakedefine FOUNDATION_HOST_C_COMPILER_CLANG
+#cmakedefine FOUNDATION_HOST_C_COMPILER_MSVC
+
+#cmakedefine FOUNDATION_HOST_SYSTEM_KNOWN
+#cmakedefine FOUNDATION_HOST_SYSTEM_LINUX
+#cmakedefine FOUNDATION_HOST_SYSTEM_APPLE
+#cmakedefine FOUNDATION_HOST_SYSTEM_WINDOWS
+
+#endif // !INFINITY_PATTERN_FOUNDATION_HOST_HH
+
 
