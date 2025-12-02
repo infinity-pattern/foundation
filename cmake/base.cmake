@@ -52,39 +52,11 @@ endif ()
 
 #**********************************************************************************#
 #                                                                                  #
-#                   Set the base warnings for the C compiler                       #
-#                                                                                  #
-#**********************************************************************************#
-
-if (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_KNOWN)
-	if (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_GNU OR INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_CLANG)
-		set(INFINITY_PATTERN_FOUNDATION_C_WARNINGS 
-			-Wall
-			-Wdeprecated
-			-Wextra
-			-Wpedantic
-			-Wconversion
-		)
-	elseif (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_MSVC)
-		set (INFINITY_PATTERN_FOUNDATION_C_WARNINGS
-			-/Wall
-		)
-	else ()
-		set (INFINITY_PATTERN_FOUNDATION_C_WARNINGS)
-		message (AUTHOR_WARNING "C host compiler known [${CMAKE_C_COMPILER_ID}] yet is unhandled when setting base warnings.")
-	endif ()
-else ()
-	set(INFINITY_PATTERN_FOUNDATION_C_WARNINGS)
-	message (WARNING "Unknown host C compiler; unable to set compilation warnings.")
-endif ()
-
-#**********************************************************************************#
-#                                                                                  #
 #                 Extract git revision and timestamp for Foundation                #
 #                                                                                  #
 #**********************************************************************************#
 
-function (infinity_pattern_foundation_extract_revision revision revision_short)
+function (infinity_pattern_foundation_extract_revision revision describe)
     # optional 3rd+ args: path to repo to query (defaults to CMAKE_CURRENT_SOURCE_DIR)
     set(_repo_dir "${ARGN}")
     if (NOT _repo_dir)
@@ -94,10 +66,10 @@ function (infinity_pattern_foundation_extract_revision revision revision_short)
     if (INFINITY_PATTERN_FOUNDATION_HOST_SYSTEM_KNOWN)
         if (INFINITY_PATTERN_FOUNDATION_HOST_SYSTEM_LINUX OR INFINITY_PATTERN_FOUNDATION_HOST_SYSTEM_WINDOWS)
             execute_process(
-              COMMAND git rev-parse --short HEAD
+              COMMAND git describe --dirty
               WORKING_DIRECTORY "${_repo_dir}"
-              OUTPUT_VARIABLE _found_rev_short
-              RESULT_VARIABLE _git_short_result
+              OUTPUT_VARIABLE _found_describe
+              RESULT_VARIABLE _git_describe_result
               OUTPUT_STRIP_TRAILING_WHITESPACE
             )
 
@@ -105,17 +77,21 @@ function (infinity_pattern_foundation_extract_revision revision revision_short)
               COMMAND git rev-parse HEAD
               WORKING_DIRECTORY "${_repo_dir}"
               OUTPUT_VARIABLE _found_rev
-              RESULT_VARIABLE _git_result
+              RESULT_VARIABLE _git_rev_result
               OUTPUT_STRIP_TRAILING_WHITESPACE
             )
 
-            if (NOT _git_short_result EQUAL 0 OR NOT _git_result EQUAL 0)
-                message(AUTHOR_WARNING "git rev-parse failed (short:${_git_short_result} full:${_git_result}) in ${_repo_dir}; leaving revisions empty")
+            if (NOT _git_describe_result EQUAL 0)
+                message (AUTHOR_WARNING "git describe failed (result:${_git_describe_result}) in ${_repo_dir}; leaving describe empty")
+            endif ()
+            
+            if (NOT _git_rev_result EQUAL 0)
+                message(AUTHOR_WARNING "git rev-parse failed (result: ${_git_result}) in ${_repo_dir}; leaving revision empty")
             endif()
 
             # Propagate into the variable names the caller supplied
             set(${revision} "${_found_rev}" PARENT_SCOPE)
-            set(${revision_short} "${_found_rev_short}" PARENT_SCOPE)
+            set(${describe} "${_found_describe}" PARENT_SCOPE)
         else ()
             message (AUTHOR_WARNING "Host system known, ${CMAKE_HOST_SYSTEM_NAME}, but unhandled when extracting git revision; leaving revision empty")
         endif ()
@@ -124,8 +100,9 @@ function (infinity_pattern_foundation_extract_revision revision revision_short)
     endif ()
 endfunction ()
 
-infinity_pattern_foundation_extract_revision(INFINITY_PATTERN_FOUNDATION_BUILD_REVISION INFINITY_PATTERN_FOUNDATION_BUILD_REVISION_SHORT)
-message (STATUS "Git Revision: ${INFINITY_PATTERN_FOUNDATION_BUILD_REVISION}") 
+infinity_pattern_foundation_extract_revision(INFINITY_PATTERN_FOUNDATION_BUILD_REVISION INFINITY_PATTERN_FOUNDATION_BUILD_DESCRIBE)
+message (STATUS "Foundation: git revision: ${INFINITY_PATTERN_FOUNDATION_BUILD_REVISION}") 
+message (STATUS "Foundation: git describe: ${INFINITY_PATTERN_FOUNDATION_BUILD_DESCRIBE}")
 
 function (infinity_pattern_foundation_generate_timestamp output_name)
 	string (TIMESTAMP _timestamp "%Y-%m-%d %H:%M:%S")
@@ -133,6 +110,6 @@ function (infinity_pattern_foundation_generate_timestamp output_name)
 endfunction ()
 
 infinity_pattern_foundation_generate_timestamp (INFINITY_PATTERN_FOUNDATION_BUILD_TIMESTAMP)
-message (STATUS "Timestamp: ${INFINITY_PATTERN_FOUNDATION_BUILD_TIMESTAMP}")
+message (STATUS "Foundation: build timestamp: ${INFINITY_PATTERN_FOUNDATION_BUILD_TIMESTAMP}")
 
 

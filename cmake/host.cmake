@@ -51,35 +51,6 @@ else ()
 	message (WARNING "Unknown Host C++ Compiler: ${CMAKE_CXX_COMPILER_ID}")
 endif ()
 
-#**********************************************************************************#
-#                                                                                  #
-#                   Detect which compiler is being used for C                      #
-#                                                                                  #
-#**********************************************************************************#
-
-if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_KNOWN ON)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_GNU ON)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_CLANG OFF)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_MSVC OFF)
-elseif (CMAKE_C_COMPILER_ID STREQUAL "Clang")
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_KNOWN ON)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_GNU OFF)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_CLANG ON)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_MSVC OFF)
-elseif (CMAKE_C_COMPILER_ID STREQUAL "MSVC")
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_KNOWN ON)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_GNU OFF)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_CLANG OFF)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_MSVC ON)
-else ()
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_KNOWN OFF)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_GNU OFF)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_CLANG OFF)
-	set (INFINITY_PATTERN_FOUNDATION_HOST_C_COMPILER_MSVC OFF)
-	message (WARNING "Unknown Host C Compiler: ${CMAKE_C_COMPILER_ID}")
-endif ()
-
 
 #**********************************************************************************#
 #                                                                                  #

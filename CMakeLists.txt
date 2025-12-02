@@ -22,13 +22,11 @@
 
 cmake_minimum_required (VERSION 4.0)
 
-set (CMAKE_C_STANDARD 99)
 set (CMAKE_CXX_STANDARD 23)
-set (CMAKE_C_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project (FOUNDATION
-	LANGUAGES C CXX
+	LANGUAGES CXX
 	VERSION 0.1.0.0
 	DESCRIPTION "A C++ Foundation library for the other Infinity Pattern projects."
 )
@@ -40,17 +38,17 @@ set (FOUNDATION_SOURCE_DIR ${PROJECT_SOURCE_DIR}/source)
 set (FOUNDATION_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
 configure_file (
-	${FOUNDATION_INCLUDE_DIR}/infinity-pattern/foundation/host.hh.in
-	${FOUNDATION_INCLUDE_DIR}/infinity-pattern/foundation/host.hh
+	${FOUNDATION_INCLUDE_DIR}/infinity-pattern/foundation/system/host.hh.in
+	${FOUNDATION_INCLUDE_DIR}/infinity-pattern/foundation/system/host.hh
 )
 
 configure_file (
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/version.cc.in
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/version.cc 
+	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc.in
+	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc 
 )
 
 set (FOUNDATION_SOURCES
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/version.cc
+	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc
 )
 
 add_library (infinity-pattern-foundation
@@ -59,5 +57,4 @@ add_library (infinity-pattern-foundation
 target_include_directories (infinity-pattern-foundation PUBLIC 
 	${FOUNDATION_INCLUDE_DIR}
 )
-
 
