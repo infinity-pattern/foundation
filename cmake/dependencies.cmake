@@ -22,36 +22,14 @@
 
 cmake_minimum_required (VERSION 3.30)
 
-set (CMAKE_CXX_STANDARD 23)
-set (CMAKE_CXX_STANDARD_REQUIRED ON)
+include(FetchContent)
 
-project (FOUNDATION
-	LANGUAGES CXX
-	VERSION 0.1.0.0
-	DESCRIPTION "A C++ Foundation library for the other Infinity Pattern projects."
+FetchContent_Declare (
+    Boost
+    GIT_REPOSITORY https://github.com/boostorg/boost.git
+    GIT_TAG        1bed2b0712b2119f20d66c5053def9173c8462a5 # release 1.90
 )
 
-include (${PROJECT_SOURCE_DIR}/cmake/host.cmake)
-include (${PROJECT_SOURCE_DIR}/cmake/base.cmake)
-include (${PROJECT_SOURCE_DIR}/cmake/dependencies.cmake)
-
-set (FOUNDATION_SOURCE_DIR ${PROJECT_SOURCE_DIR}/source)
-set (FOUNDATION_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-
-configure_file (
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc.in
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc 
+FetchContent_MakeAvailable(
+    Boost
 )
-
-set (FOUNDATION_SOURCES
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc
-)
-
-add_library (infinity-pattern-foundation
-	${FOUNDATION_SOURCES}
-)
-target_include_directories (infinity-pattern-foundation PUBLIC 
-	${FOUNDATION_INCLUDE_DIR}
-)
-target_link_libraries(infinity-pattern-foundation PUBLIC Boost Boost::log Boost::unit_test_framework)
-

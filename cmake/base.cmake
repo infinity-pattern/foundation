@@ -20,7 +20,7 @@
 #                                                                        #
 ##########################################################################
 
-cmake_minimum_required (VERSION 4.0)
+cmake_minimum_required (VERSION 3.30)
 
 #**********************************************************************************#
 #                                                                                  #
@@ -57,44 +57,41 @@ endif ()
 #**********************************************************************************#
 
 function (infinity_pattern_foundation_extract_revision revision describe)
-    # optional 3rd+ args: path to repo to query (defaults to CMAKE_CURRENT_SOURCE_DIR)
+    # optional 3rd argument: path to repo to query (defaults to CMAKE_CURRENT_SOURCE_DIR)
     set(_repo_dir "${ARGN}")
     if (NOT _repo_dir)
         set(_repo_dir "${CMAKE_CURRENT_SOURCE_DIR}")
     endif()
 
+    # Linux, Windows and Darwin OS should all support the following commands.
     if (INFINITY_PATTERN_FOUNDATION_HOST_SYSTEM_KNOWN)
-        if (INFINITY_PATTERN_FOUNDATION_HOST_SYSTEM_LINUX OR INFINITY_PATTERN_FOUNDATION_HOST_SYSTEM_WINDOWS)
-            execute_process(
-              COMMAND git describe --dirty
-              WORKING_DIRECTORY "${_repo_dir}"
-              OUTPUT_VARIABLE _found_describe
-              RESULT_VARIABLE _git_describe_result
-              OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
+        execute_process(
+            COMMAND git describe --dirty
+            WORKING_DIRECTORY "${_repo_dir}"
+            OUTPUT_VARIABLE _found_describe
+            RESULT_VARIABLE _git_describe_result
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
 
-            execute_process(
-              COMMAND git rev-parse HEAD
-              WORKING_DIRECTORY "${_repo_dir}"
-              OUTPUT_VARIABLE _found_rev
-              RESULT_VARIABLE _git_rev_result
-              OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
+        execute_process(
+            COMMAND git rev-parse HEAD
+            WORKING_DIRECTORY "${_repo_dir}"
+            OUTPUT_VARIABLE _found_rev
+            RESULT_VARIABLE _git_rev_result
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
 
-            if (NOT _git_describe_result EQUAL 0)
-                message (AUTHOR_WARNING "git describe failed (result:${_git_describe_result}) in ${_repo_dir}; leaving describe empty")
-            endif ()
-            
-            if (NOT _git_rev_result EQUAL 0)
-                message(AUTHOR_WARNING "git rev-parse failed (result: ${_git_result}) in ${_repo_dir}; leaving revision empty")
-            endif()
-
-            # Propagate into the variable names the caller supplied
-            set(${revision} "${_found_rev}" PARENT_SCOPE)
-            set(${describe} "${_found_describe}" PARENT_SCOPE)
-        else ()
-            message (AUTHOR_WARNING "Host system known, ${CMAKE_HOST_SYSTEM_NAME}, but unhandled when extracting git revision; leaving revision empty")
+        if (NOT _git_describe_result EQUAL 0)
+            message (AUTHOR_WARNING "git describe failed (result:${_git_describe_result}) in ${_repo_dir}; leaving describe empty")
         endif ()
+
+        if (NOT _git_rev_result EQUAL 0)
+            message(AUTHOR_WARNING "git rev-parse failed (result: ${_git_result}) in ${_repo_dir}; leaving revision empty")
+        endif()
+
+        # Propagate into the variable names the caller supplied
+        set(${revision} "${_found_rev}" PARENT_SCOPE)
+        set(${describe} "${_found_describe}" PARENT_SCOPE)
     else ()
         message (WARNING "Unable to extract build revision")
     endif ()
