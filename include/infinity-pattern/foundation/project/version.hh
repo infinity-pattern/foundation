@@ -36,10 +36,10 @@ namespace foundation {
  * 
  */
 struct Version {
-    unsigned major : 16;
-    unsigned minor : 16;
-    unsigned patch : 16;
-    unsigned tweak : 16;
+    unsigned short major;
+    unsigned short minor;
+    unsigned short patch;
+    unsigned short tweak;
 
     constexpr auto operator<=>(Version const &that) const noexcept = default;
 };

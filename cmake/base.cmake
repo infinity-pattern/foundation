@@ -20,7 +20,7 @@
 #                                                                        #
 ##########################################################################
 
-cmake_minimum_required (VERSION 3.30)
+cmake_minimum_required (VERSION ${INFINITY_PATTERN_CMAKE_MINIMUM_VERSION})
 
 #**********************************************************************************#
 #                                                                                  #
@@ -56,7 +56,18 @@ endif ()
 #                                                                                  #
 #**********************************************************************************#
 
-function (infinity_pattern_foundation_extract_revision revision describe)
+
+# Function to extract the git revision and describe of the current project
+#
+# This function uses git to report the current build revision for automated tooling,
+# and the current git describe for human read output.
+#
+# Arguments:
+#   revision: the name of the variable to be set with the contents of git rev-parse
+#   describe: the name of the variable to set with the contents of git describe
+#     [path]: [optional] the working directory for the git commands. defaults to CMAKE_CURRENT_SOURCE_DIR
+#
+function (infinity_pattern_extract_revision revision describe)
     # optional 3rd argument: path to repo to query (defaults to CMAKE_CURRENT_SOURCE_DIR)
     set(_repo_dir "${ARGN}")
     if (NOT _repo_dir)
@@ -97,16 +108,22 @@ function (infinity_pattern_foundation_extract_revision revision describe)
     endif ()
 endfunction ()
 
-infinity_pattern_foundation_extract_revision(INFINITY_PATTERN_FOUNDATION_BUILD_REVISION INFINITY_PATTERN_FOUNDATION_BUILD_DESCRIBE)
-message (STATUS "Foundation: git revision: ${INFINITY_PATTERN_FOUNDATION_BUILD_REVISION}") 
-message (STATUS "Foundation: git describe: ${INFINITY_PATTERN_FOUNDATION_BUILD_DESCRIBE}")
+infinity_pattern_extract_revision(FOUNDATION_BUILD_REVISION FOUNDATION_BUILD_DESCRIBE)
+message (STATUS "Foundation: git revision: ${FOUNDATION_BUILD_REVISION}")
+message (STATUS "Foundation: git describe: ${FOUNDATION_BUILD_DESCRIBE}")
 
-function (infinity_pattern_foundation_generate_timestamp output_name)
+#
+# A Function to generate a timestamp of the build. For embedding into the resulting executable
+#
+# Arguments:
+#   timestamp: the name of the variable to be set with the timestamp
+#
+function (infinity_pattern_generate_timestamp timestamp)
 	string (TIMESTAMP _timestamp "%Y-%m-%d %H:%M:%S")
-	set (${output_name} "${_timestamp}" PARENT_SCOPE)
+	set (${timestamp} "${_timestamp}" PARENT_SCOPE)
 endfunction ()
 
-infinity_pattern_foundation_generate_timestamp (INFINITY_PATTERN_FOUNDATION_BUILD_TIMESTAMP)
-message (STATUS "Foundation: build timestamp: ${INFINITY_PATTERN_FOUNDATION_BUILD_TIMESTAMP}")
+infinity_pattern_generate_timestamp (FOUNDATION_BUILD_TIMESTAMP)
+message (STATUS "Foundation: build timestamp: ${FOUNDATION_BUILD_TIMESTAMP}")
 
 

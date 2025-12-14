@@ -8,8 +8,7 @@ out/
 .cache/
 
 # Generated files
-**/host.hh
-**/version.cc
+**/source/**/version.cc
 
 # Prerequisites
 *.d
