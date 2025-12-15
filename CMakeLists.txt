@@ -27,7 +27,7 @@ set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project (FOUNDATION
 	LANGUAGES CXX
-	VERSION 0.1.0.0
+	VERSION 0.1.0.1
 	DESCRIPTION "A C++ Foundation library for the other Infinity Pattern projects."
 )
 
