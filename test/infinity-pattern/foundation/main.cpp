@@ -20,14 +20,5 @@
  *                                                                          *
  ***************************************************************************/
 
-#include "infinity-pattern/foundation/project/version.hh"
-
-namespace infinity_pattern {
-namespace foundation {
-const Build build = {.version = {${FOUNDATION_VERSION_MAJOR}, ${FOUNDATION_VERSION_MINOR}, ${FOUNDATION_VERSION_PATCH}, ${FOUNDATION_VERSION_TWEAK}},
-					 .revision = {"${FOUNDATION_BUILD_REVISION}"},
-					 .describe = {"${FOUNDATION_BUILD_DESCRIBE}"},
-					 .timestamp = {"${FOUNDATION_BUILD_TIMESTAMP}"}};
-} // namespace foundation
-} // namespace infinity_pattern
-
+#define BOOST_TEST_MODULE foundation
+#include <boost/test/unit_test.hpp>

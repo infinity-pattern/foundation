@@ -27,7 +27,7 @@ include(FetchContent)
 FetchContent_Declare (
     Boost
     GIT_REPOSITORY https://github.com/boostorg/boost.git
-    GIT_TAG        1bed2b0712b2119f20d66c5053def9173c8462a5 # release 1.90
+    GIT_TAG        1bed2b0712b2119f20d66c5053def9173c8462a5 # release 1.90.0
 )
 
 FetchContent_MakeAvailable(

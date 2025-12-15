@@ -20,6 +20,14 @@
  *                                                                          *
  ***************************************************************************/
 
-#define BOOST_TEST_MODULE foundation
-#include <boost/test/unit_test.hpp>
+#include "infinity-pattern/foundation/project/version.hpp"
+
+namespace infinity_pattern {
+namespace foundation {
+const Build build = {.version = {0, 1, 0, 0},
+					 .revision = {"63bd5f6aec9061b87395d945a49884f591e89dc7"},
+					 .describe = {"v0.1-1-g63bd5f6-dirty"},
+					 .timestamp = {"2025-12-15 13:35:35"}};
+} // namespace foundation
+} // namespace infinity_pattern
 

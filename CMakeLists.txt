@@ -41,7 +41,7 @@ set (FOUNDATION_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
 include (${FOUNDATION_CMAKE_DIR}/host.cmake)
 include (${FOUNDATION_CMAKE_DIR}/base.cmake)
 include (${FOUNDATION_CMAKE_DIR}/dependencies.cmake)
-include (${FOUNDATION_CMAKE_DIR}/test.cmake)
+include (${FOUNDATION_CMAKE_DIR}/discover_tests.cmake)
 
 add_subdirectory (${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation)
 add_subdirectory (${FOUNDATION_TEST_DIR}/infinity-pattern/foundation)

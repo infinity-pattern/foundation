@@ -23,14 +23,13 @@
 cmake_minimum_required (VERSION ${INFINITY_PATTERN_CMAKE_MINIMUM_VERSION})
 
 set (FOUNDATION_TEST_SOURCES
-    ${FOUNDATION_TEST_DIR}/infinity-pattern/foundation/project/version.cc
+    ${FOUNDATION_TEST_DIR}/infinity-pattern/foundation/project/version.cpp
 
-    ${FOUNDATION_TEST_DIR}/infinity-pattern/foundation/utility/error.cc
-
-    ${FOUNDATION_TEST_DIR}/infinity-pattern/foundation/main.cc
+    ${FOUNDATION_TEST_DIR}/infinity-pattern/foundation/utility/error.cpp
 )
 
 add_executable (infinity-pattern-foundation-test
+    ${FOUNDATION_TEST_DIR}/infinity-pattern/foundation/main.cpp
     ${FOUNDATION_TEST_SOURCES}
 )
 
@@ -40,7 +39,13 @@ target_include_directories(infinity-pattern-foundation-test PUBLIC
 
 target_link_libraries (infinity-pattern-foundation-test PUBLIC
     infinity-pattern-foundation
+    stdc++exp
     Boost::unit_test_framework
 )
+
+include (CTest)
+
+#add_test (NAME "Test All" COMMAND infinity-pattern-foundation-test)
+infinity_pattern_discover_tests(infinity-pattern-foundation-test)
 
 

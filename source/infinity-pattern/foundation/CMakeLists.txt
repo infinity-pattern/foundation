@@ -23,12 +23,12 @@
 cmake_minimum_required (VERSION ${INFINITY_PATTERN_CMAKE_MINIMUM_VERSION})
 
 configure_file (
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc.in
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc
+	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cpp.in
+	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cpp
 )
 
 set (FOUNDATION_SOURCES
-	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cc
+	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cpp
 )
 
 add_library (infinity-pattern-foundation

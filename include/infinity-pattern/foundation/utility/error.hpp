@@ -54,7 +54,7 @@ inline auto operator<<(std::ostream &out, const std::source_location &location)
 inline auto operator<<(std::ostream &out, const Error &error) -> std::ostream & {
     out << "Error: " << error.message << "\n"
         << "  at " << error.location << "\n"
-        << "during\n"
+        << "  during:\n"
         << error.trace;
     return out;
 }
@@ -68,7 +68,7 @@ template <> struct std::formatter<std::source_location> {
     }
     template <class FormatContext>
     auto format(const std::source_location &location, FormatContext &context)
-        -> FormatContext::iterator {
+       const -> FormatContext::iterator {
         return std::format_to(context.out(),
                               "{}:{}.{} in {}",
                               location.file_name(),
@@ -85,10 +85,10 @@ template <> struct std::formatter<infinity_pattern::foundation::Error> {
     }
 
     template <class FormatContext>
-    auto format(const infinity::foundation::Error &error,
-                FormatContext &context) -> FormatContext::iterator {
+    auto format(const infinity_pattern::foundation::Error &error,
+                FormatContext &context) const -> FormatContext::iterator {
         return std::format_to(context.out(),
-                              "Error: {}\n  at {}\ during:\n{}",
+                              "Error: {}\n  at {}\n  during:\n{}",
                               error.message,
                               error.location,
                               error.trace);

@@ -24,6 +24,19 @@ cmake_minimum_required (VERSION ${INFINITY_PATTERN_CMAKE_MINIMUM_VERSION})
 
 #**********************************************************************************#
 #                                                                                  #
+#            Basic utility functions for use throughout cmake projects             #
+#                                                                                  #
+#**********************************************************************************#
+
+function (debug_message)
+    if (DEFINED INFINITY_PATTERN_CMAKE_DEBUG)
+        message (DEBUG "${ARGV0}")
+    endif ()
+endfunction ()
+
+
+#**********************************************************************************#
+#                                                                                  #
 #                   Set the base warnings for the C++ compiler                     #
 #                                                                                  #
 #**********************************************************************************#
