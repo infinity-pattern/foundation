@@ -24,10 +24,10 @@
 
 namespace infinity_pattern {
 namespace foundation {
-const Build build = {.version = {0, 1, 0, 0},
-					 .revision = {"63bd5f6aec9061b87395d945a49884f591e89dc7"},
-					 .describe = {"v0.1-1-g63bd5f6-dirty"},
-					 .timestamp = {"2025-12-15 13:35:35"}};
+const Build build = {.version = {0, 1, 0, 2},
+					 .revision = {"f6e9c688fdcfaa7fd4a01745f6382949a4f51edd"},
+					 .describe = {"v0.1.0.2-dirty"},
+					 .timestamp = {"2025-12-18 16:49:54"}};
 } // namespace foundation
 } // namespace infinity_pattern
 
