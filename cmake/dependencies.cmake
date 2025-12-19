@@ -22,14 +22,30 @@
 
 cmake_minimum_required (VERSION ${INFINITY_PATTERN_CMAKE_MINIMUM_VERSION})
 
-include(FetchContent)
+include(ExternalProject)
 
-FetchContent_Declare (
+set_directory_properties(PROPERTIES EP_BASE ${FOUNDATION_BINARY_DIR}/_deps)
+
+ExternalProject_Add (
     Boost
     GIT_REPOSITORY https://github.com/boostorg/boost.git
     GIT_TAG        1bed2b0712b2119f20d66c5053def9173c8462a5 # release 1.90.0
+    INSTALL_COMMAND
+        ${CMAKE_COMMAND}
+            --install ${FOUNDATION_BINARY_DIR}/_deps/Build/Boost
+            --prefix ${FOUNDATION_BINARY_DIR}
 )
 
-FetchContent_MakeAvailable(
-    Boost
+ExternalProject_Add (
+    infinity-pattern-foundation
+    DEPENDS
+        Boost
+    SOURCE_DIR  ${FOUNDATION_BASE_DIR}
+    BINARY_DIR  ${FOUNDATION_BINARY_DIR}
+    INSTALL_DIR ${FOUNDATION_BINARY_DIR}
+    CMAKE_ARGS
+        -DCMAKE_PREFIX_PATH:STRING=${FOUNDATION_BINARY_DIR}
+        -DBUILD_DEPENDENCIES=OFF
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 )

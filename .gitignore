@@ -8,7 +8,7 @@ out/
 .cache/
 
 # Generated files
-**/source/**/version.cc
+**/source/**/version.cpp
 
 # Prerequisites
 *.d
