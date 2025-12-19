@@ -8,7 +8,7 @@ out/
 .cache/
 
 # Generated files
-**/source/**/version.cpp
+**/source/infinity-pattern/foundation/version.cpp
 
 # Prerequisites
 *.d
