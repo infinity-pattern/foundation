@@ -31,8 +31,15 @@ set (FOUNDATION_SOURCES
 	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cpp
 )
 
-add_library (infinity-pattern-foundation
-	${FOUNDATION_SOURCES}
+add_library (infinity-pattern-foundation)
+
+target_sources (infinity-pattern-foundation PUBLIC
+	${FOUNDATION_SOURCE_DIR}/infinity-pattern/foundation/project/version.cpp
+)
+
+target_sources (infinity-pattern-foundation INTERFACE
+	${FOUNDATION_INCLUDE_DIR}/infinity-pattern/foundation/project/version.hpp
+	${FOUNDATION_INCLUDE_DIR}/infinity-pattern/foundation/utility/error.hpp
 )
 
 target_include_directories (infinity-pattern-foundation PUBLIC
@@ -40,5 +47,8 @@ target_include_directories (infinity-pattern-foundation PUBLIC
 )
 
 target_link_libraries(infinity-pattern-foundation PUBLIC
-
+	Boost::headers
 )
+
+
+install (TARGETS infinity-pattern-foundation)
