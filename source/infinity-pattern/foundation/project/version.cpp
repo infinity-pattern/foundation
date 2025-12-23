@@ -25,9 +25,9 @@
 namespace infinity_pattern {
 namespace foundation {
 const Build build = {.version = {0, 1, 0, 3},
-					 .revision = {"3ab0e1a987ff8e67588cb398244b65c7ac602051"},
-					 .describe = {"v0.1.0.3-dirty"},
-					 .timestamp = {"2025-12-18 19:15:33"}};
+					 .revision = {"a49b1fd99801c5a226de047e654023e746c74f05"},
+					 .describe = {"v0.1.0.3-1-ga49b1fd-dirty"},
+					 .timestamp = {"2025-12-22 21:08:36"}};
 } // namespace foundation
 } // namespace infinity_pattern
 
