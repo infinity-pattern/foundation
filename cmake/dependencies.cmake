@@ -27,7 +27,7 @@ include (ExternalProject)
 # I think we need to install the dependencies, and the project itself in a
 # location which can be specified by the consuming project.
 
-set_directory_properties (PROPERTIES EP_PREFIX ${FOUNDATION_BINARY_DIR}/_deps)
+set_directory_properties (PROPERTIES EP_PREFIX ${FOUNDATION_BINARY_DIR}/external)
 
 ExternalProject_Add (
     Boost
@@ -35,7 +35,7 @@ ExternalProject_Add (
     GIT_TAG        1bed2b0712b2119f20d66c5053def9173c8462a5 # release 1.90.0
     INSTALL_COMMAND
         ${CMAKE_COMMAND}
-            --install ${FOUNDATION_BINARY_DIR}/_deps/src/Boost
+            --install ${FOUNDATION_BINARY_DIR}/external/src/Boost
             --prefix ${FOUNDATION_BINARY_DIR}
 )
 
