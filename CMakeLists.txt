@@ -1,7 +1,7 @@
 
 ##########################################################################
 #                                                                        #
-# Copyright (C) 2024 Cade Weinberg                                       #
+# Copyright (C) 2026 Cade Weinberg                                       #
 #                                                                        #
 # This file is part of foundation.                                       #
 #                                                                        #
